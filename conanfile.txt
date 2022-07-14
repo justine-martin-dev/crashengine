@@ -1,8 +1,0 @@
-[generators]
-cmake
-
-[requires]
-glm/0.9.9.8
-glad/0.1.36
-glfw/3.3.7
-stb/cci.20210910
