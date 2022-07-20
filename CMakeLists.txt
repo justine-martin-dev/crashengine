@@ -8,18 +8,29 @@ add_subdirectory(vendors/glm)
 
 # Crashengine
 add_library(CrashEngine 
-	include/CrashEngine/glfw.hpp src/CrashEngine/glfw.cpp
-	include/CrashEngine/module.hpp src/CrashEngine/module.cpp
-	include/CrashEngine/window.hpp src/CrashEngine/window.cpp)
+	engine/src/CrashEngine/CrashEngine.cpp)
 
 target_include_directories(CrashEngine 
 	PUBLIC 
-		include/ 
+		engine/include)
+
+set_target_properties(CrashEngine PROPERTIES CXX_STANDARD 17)
+
+# Default handlers
+add_library(CrashEngine-default-handlers 
+	default-handlers/src/CrashEngine/default-handlers/fucking_imp.cpp
+	default-handlers/src/CrashEngine/default-handlers/glfw.cpp)
+
+target_include_directories(CrashEngine-default-handlers  
+	PUBLIC 
+		default-handlers/include
 		vendors/stb 
 		vendors/glad/include)
 
-target_link_libraries(CrashEngine glm glfw)
-set_target_properties(CrashEngine PROPERTIES CXX_STANDARD 17)
+set_target_properties(CrashEngine-default-handlers PROPERTIES POSITION_INDEPENDENT_CODE True)
+
+target_link_libraries(CrashEngine-default-handlers CrashEngine glm glfw)
+set_target_properties(CrashEngine-default-handlers PROPERTIES CXX_STANDARD 17)
 
 # Demo
 add_executable(demo 
@@ -27,16 +38,16 @@ add_executable(demo
 
 target_include_directories(demo 
 	PUBLIC 
-		demo/include/)
+		demo/include)
 
-target_link_libraries(demo CrashEngine)
+target_link_libraries(demo CrashEngine CrashEngine-default-handlers)
 set_target_properties(demo PROPERTIES CXX_STANDARD 17)
 
 # Tests
 add_executable(tests 
 	test/TestCase.cpp)
 
-target_link_libraries(tests Catch2WithMain CrashEngine)
+target_link_libraries(tests Catch2WithMain CrashEngine CrashEngine-default-handlers)
 set_target_properties(tests PROPERTIES CXX_STANDARD 17)
 
 include(CTest)
