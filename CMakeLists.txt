@@ -7,23 +7,21 @@ add_subdirectory(vendors/glfw)
 add_subdirectory(vendors/glm)
 
 # Crashengine
-add_library(CrashEngine 
-	engine/src/CrashEngine/CrashEngine.cpp)
+add_library(CrashEngine src/CrashEngine/crashengine.cpp)
 
 target_include_directories(CrashEngine 
 	PUBLIC 
-		engine/include)
+		include/CrashEngine)
 
 set_target_properties(CrashEngine PROPERTIES CXX_STANDARD 17)
 
 # Default handlers
-add_library(CrashEngine-default-handlers 
-	default-handlers/src/CrashEngine/default-handlers/fucking_imp.cpp
-	default-handlers/src/CrashEngine/default-handlers/glfw.cpp)
+add_library(CrashEngine-default-handlers src/default-handlers/fucking_imp.cpp
+	                                     src/default-handlers/glfw_handler.cpp)
 
-target_include_directories(CrashEngine-default-handlers  
+target_include_directories(CrashEngine-default-handlers
 	PUBLIC 
-		default-handlers/include
+		include/default-handlers
 		vendors/stb 
 		vendors/glad/include)
 
@@ -33,8 +31,7 @@ target_link_libraries(CrashEngine-default-handlers CrashEngine glm glfw)
 set_target_properties(CrashEngine-default-handlers PROPERTIES CXX_STANDARD 17)
 
 # Demo
-add_executable(demo 
-	demo/src/main.cpp)
+add_executable(demo src/demo/main.cpp)
 
 target_include_directories(demo 
 	PUBLIC 

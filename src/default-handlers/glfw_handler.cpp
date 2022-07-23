@@ -1,4 +1,4 @@
-#include "CrashEngine/default-handlers/glfw.hpp"
+#include "glfw_handler.hpp"
 
 namespace crashengine {
 	GlfwWindowHandler::GlfwWindowHandler(const WindowConfig& config) : initialized(false), window(nullptr) {

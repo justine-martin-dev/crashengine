@@ -1,4 +1,4 @@
-#include <CrashEngine/CrashEngine.hpp>
+#include "crashengine.hpp"
 
 namespace crashengine {
 	CrashEngine::CrashEngine(WindowHandler* windowHandler) : windowHandler(windowHandler) {

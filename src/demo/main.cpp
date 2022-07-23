@@ -1,5 +1,5 @@
-#include "CrashEngine/CrashEngine.hpp"
-#include "CrashEngine/default-handlers/glfw.hpp"
+#include "crashengine.hpp"
+#include "glfw_handler.hpp"
 
 #include <iostream>
 
