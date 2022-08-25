@@ -3,6 +3,7 @@
 #include <string>
 
 namespace crashengine {
+
 	struct WindowConfig {
 		std::string title = "My incredible game name goes here";
 
@@ -20,8 +21,6 @@ namespace crashengine {
 		protected:
 		
 		public:
-			virtual void draw() = 0;
-
 			virtual const bool isInitialized() const = 0;
 
 			virtual void hide() = 0;

@@ -8,7 +8,8 @@ add_subdirectory(vendors/glm)
 
 # Crashengine
 add_library(CrashEngine 
-	engine/src/CrashEngine/CrashEngine.cpp)
+	engine/src/CrashEngine/CrashEngine.cpp
+	engine/src/CrashEngine/Scene.cpp)
 
 target_include_directories(CrashEngine 
 	PUBLIC 
@@ -19,7 +20,11 @@ set_target_properties(CrashEngine PROPERTIES CXX_STANDARD 17)
 # Default handlers
 add_library(CrashEngine-default-handlers 
 	default-handlers/src/CrashEngine/default-handlers/fucking_imp.cpp
-	default-handlers/src/CrashEngine/default-handlers/glfw.cpp)
+	default-handlers/src/CrashEngine/default-handlers/glfw.cpp
+	default-handlers/src/CrashEngine/default-handlers/opengl.cpp
+	default-handlers/src/CrashEngine/default-handlers/opengl/OpenGlBuffer.cpp
+	default-handlers/src/CrashEngine/default-handlers/opengl/OpenGlMesh.cpp
+	default-handlers/src/CrashEngine/default-handlers/opengl/OpenGlShader.cpp)
 
 target_include_directories(CrashEngine-default-handlers  
 	PUBLIC 
@@ -34,7 +39,8 @@ set_target_properties(CrashEngine-default-handlers PROPERTIES CXX_STANDARD 17)
 
 # Demo
 add_executable(demo 
-	demo/src/main.cpp)
+	demo/src/main.cpp
+	demo/src/MainScene.cpp)
 
 target_include_directories(demo 
 	PUBLIC 

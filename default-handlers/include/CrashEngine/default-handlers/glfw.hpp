@@ -20,8 +20,6 @@ namespace crashengine {
 			GlfwWindowHandler(const WindowConfig& config);
 			~GlfwWindowHandler();
 
-			void draw() override;
-
 			const bool isInitialized() const override;
 
 			void hide() override;

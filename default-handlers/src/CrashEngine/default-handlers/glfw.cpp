@@ -1,12 +1,15 @@
 #include "CrashEngine/default-handlers/glfw.hpp"
 
 namespace crashengine {
+
 	GlfwWindowHandler::GlfwWindowHandler(const WindowConfig& config) : initialized(false), window(nullptr) {
 		if(!glfwInit()) {
 			return;
 		}
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+
+		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 		this->window = glfwCreateWindow(config.width, config.height,  config.title.c_str(), glfwGetPrimaryMonitor(), nullptr);
 		if(!this->window) {
 			glfwTerminate();
@@ -24,11 +27,6 @@ namespace crashengine {
 		if(initialized) {
 			glfwTerminate();
 		}
-	}
-
-	void GlfwWindowHandler::draw() {
-		glClearColor(1.0, 1.0, 0.0, 1.0);
-		glClear(GL_COLOR_BUFFER_BIT);
 	}
 
 	const bool GlfwWindowHandler::isInitialized() const {
@@ -90,7 +88,6 @@ namespace crashengine {
 		glfwGetWindowSize(this->window, &w, &h);
 
 		glfwSetWindowSize(this->window, width, h);
-
 	}
 	
 	const int GlfwWindowHandler::getWidth() const {
@@ -131,4 +128,5 @@ namespace crashengine {
 	const int GlfwWindowHandler::getBackgroundFramerate() const {
 		return 0;
 	}
+
 }
