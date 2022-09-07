@@ -8,6 +8,15 @@ MainScene::MainScene(crashengine::CrashEngine* engine) : crashengine::Scene(engi
 	shadersToCreate.insert(fragment);
 
 	shader = this->engine->getGraphicsApiHandler()->createShader(shadersToCreate);
+	shader->registerVariable("color");
+	
+	float v[] = {0.0f, 0.0f, 1.0f};
+	crashengine::Data<crashengine::DataType::FLOAT, 1, 3> data;
+	data.count = 1;
+	data.data = v;
+
+	shader->bind();
+	shader->updateVariable("color", data);
 
 	std::vector<float> vertices = {
 		0.5f,  0.5f, 0.0f,  // top right

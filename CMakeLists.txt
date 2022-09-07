@@ -9,7 +9,8 @@ add_subdirectory(vendors/glm)
 # Crashengine
 add_library(CrashEngine 
 	engine/src/CrashEngine/CrashEngine.cpp
-	engine/src/CrashEngine/Scene.cpp)
+	engine/src/CrashEngine/Scene.cpp
+	engine/src/CrashEngine/Shader.cpp)
 
 target_include_directories(CrashEngine 
 	PUBLIC 
