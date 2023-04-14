@@ -1,5 +1,6 @@
 #pragma once
 
+#include "CrashEngine/logger.hpp"
 #include "CrashEngine/Shader.hpp"
 #include "CrashEngine/utiliy.hpp"
 

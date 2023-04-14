@@ -40,7 +40,7 @@ namespace crashengine {
 		if(!success) {
 			char infoLog[512];
 			glGetProgramInfoLog(this->id, 512, 0, infoLog);
-			std::cout << infoLog << std::endl;
+			log::error(infoLog);
 		}
 	}
 
@@ -54,11 +54,6 @@ namespace crashengine {
 
 	void OpenGlShader::updateVec3fVar(const std::string& variable, const Data<DataType::FLOAT, 1, 3>& data) {
 		glUniform3fv(this->variableLocations[variable], data.count, (float*) data.data);
-		
-		for (const auto& [key, value] : this->variableLocations) {
-			std::cout << '[' << key << "] = " << value << "; ";
-		}
-		std::cout << glGetError() << std::endl;
 	}
 
 	void OpenGlShader::updateVec4fVar(const std::string& variable, const Data<DataType::FLOAT, 1, 4>& data) {

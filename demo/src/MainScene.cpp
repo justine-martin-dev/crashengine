@@ -9,14 +9,25 @@ MainScene::MainScene(crashengine::CrashEngine* engine) : crashengine::Scene(engi
 
 	shader = this->engine->getGraphicsApiHandler()->createShader(shadersToCreate);
 	shader->registerVariable("color");
+	shader->registerVariable("myAwesomeTexture");
+
+	shader->bind();
 	
 	float v[] = {0.0f, 0.0f, 1.0f};
 	crashengine::Data<crashengine::DataType::FLOAT, 1, 3> data;
 	data.count = 1;
 	data.data = v;
 
-	shader->bind();
+	int value = 0;
+	crashengine::Data<crashengine::DataType::INT, 1, 1> data2;
+	data2.count = 1;
+	data2.data = &value;
+
 	shader->updateVariable("color", data);
+	shader->updateVariable("myAwesomeTexture", data2);
+	shader->unbind();
+
+	this->texture = engine->getGraphicsApiHandler()->storeTextureIntoMemory("nebu.png");
 
 	std::vector<float> vertices = {
 		0.5f,  0.5f, 0.0f,  // top right
@@ -62,8 +73,10 @@ void MainScene::update(float delta) {
 
 void MainScene::draw() {
 	this->shader->bind();
+	this->texture->bind(0);
 	this->mesh->bind();
 	this->mesh->draw();
 	this->mesh->unbind();
+	this->texture->unbind();
 	this->shader->unbind();
 }

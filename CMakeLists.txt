@@ -1,5 +1,5 @@
-
 cmake_minimum_required (VERSION 3.23)
+
 project(CrashEngine VERSION 0.0.0 LANGUAGES CXX)
 
 add_subdirectory(vendors/catch2)
@@ -9,8 +9,10 @@ add_subdirectory(vendors/glm)
 # Crashengine
 add_library(CrashEngine 
 	engine/src/CrashEngine/CrashEngine.cpp
+	engine/src/CrashEngine/logger.cpp
 	engine/src/CrashEngine/Scene.cpp
-	engine/src/CrashEngine/Shader.cpp)
+	engine/src/CrashEngine/Shader.cpp
+	engine/src/CrashEngine/Texture.cpp)
 
 target_include_directories(CrashEngine 
 	PUBLIC 
@@ -25,7 +27,8 @@ add_library(CrashEngine-default-handlers
 	default-handlers/src/CrashEngine/default-handlers/opengl.cpp
 	default-handlers/src/CrashEngine/default-handlers/opengl/OpenGlBuffer.cpp
 	default-handlers/src/CrashEngine/default-handlers/opengl/OpenGlMesh.cpp
-	default-handlers/src/CrashEngine/default-handlers/opengl/OpenGlShader.cpp)
+	default-handlers/src/CrashEngine/default-handlers/opengl/OpenGlShader.cpp
+	default-handlers/src/CrashEngine/default-handlers/opengl/OpenGlTexture.cpp)
 
 target_include_directories(CrashEngine-default-handlers  
 	PUBLIC 

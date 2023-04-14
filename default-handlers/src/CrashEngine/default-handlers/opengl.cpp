@@ -33,7 +33,7 @@ namespace crashengine {
 
 			std::ifstream shaderFileStream(source.second);
 			if(!shaderFileStream) {
-				std::cerr << "Couldn't find " << source.second << std::endl;
+				log::error("Couldn't find shader source '" + source.second + "'");
 			}
 			std::string sourceCode((std::istreambuf_iterator<char>(shaderFileStream)), std::istreambuf_iterator<char>());
 			const char *sourceCodeCStr = sourceCode.c_str(); 
@@ -59,8 +59,13 @@ namespace crashengine {
 		return new OpenGlMesh(vertices, verticesNormals, textureCoordinates, verticesIndex);
 	}
 
-	void OpenGlGraphicsApiHandler::storeTextureIntoMemory() {
-		
+	Texture* OpenGlGraphicsApiHandler::storeTextureIntoMemory(const std::string& path) {
+		TextureSettings settings;
+		return this->storeTextureIntoMemory(path, settings);
+	}
+
+	Texture* OpenGlGraphicsApiHandler::storeTextureIntoMemory(const std::string& path, TextureSettings settings) {
+		return new OpenGlTexture(path, settings);
 	}
 
 }

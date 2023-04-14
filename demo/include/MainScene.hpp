@@ -4,6 +4,7 @@
 #include "CrashEngine/Mesh.hpp"
 #include "CrashEngine/Scene.hpp"
 #include "CrashEngine/Shader.hpp"
+#include "CrashEngine/Texture.hpp"
 
 class MainScene : public crashengine::Scene {
 
@@ -11,6 +12,7 @@ class MainScene : public crashengine::Scene {
 
 		crashengine::Mesh* mesh;
 		crashengine::Shader* shader;
+		crashengine::Texture* texture;
 
 	public:
 

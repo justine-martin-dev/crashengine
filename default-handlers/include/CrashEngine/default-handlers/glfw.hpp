@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CrashEngine/handlers/window_handler.hpp"
+#include "CrashEngine/logger.hpp"
 
 #include "glad/gl.h"
 #include "GLFW/glfw3.h"

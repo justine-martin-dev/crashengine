@@ -4,6 +4,7 @@ namespace crashengine {
 
 	GlfwWindowHandler::GlfwWindowHandler(const WindowConfig& config) : initialized(false), window(nullptr) {
 		if(!glfwInit()) {
+			log::error("Error while initializing glfw");
 			return;
 		}
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -12,6 +13,7 @@ namespace crashengine {
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 		this->window = glfwCreateWindow(config.width, config.height,  config.title.c_str(), glfwGetPrimaryMonitor(), nullptr);
 		if(!this->window) {
+			log::error("Error while creating the glfw window");
 			glfwTerminate();
 			return;
 		}
