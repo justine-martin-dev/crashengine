@@ -8,7 +8,7 @@ namespace crashengine {
 	}
 
 	void OpenGlGraphicsApiHandler::draw() {
-		
+		log::warn("Not implemented yet");
 	}
 
 	Shader* OpenGlGraphicsApiHandler::createShader(std::set<std::pair<ShaderType, std::string>>& sourceList) {

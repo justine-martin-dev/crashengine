@@ -100,34 +100,42 @@ namespace crashengine {
 	}
 	
 	void GlfwWindowHandler::setFullscreen(const bool& fullscreen) {
-		
+		log::warn("Not implemented yet");
 	}
 	
 	const bool GlfwWindowHandler::isFullscreen() const {
+		log::warn("Not implemented yet");
+
 		return false;
 	}
 	
 	void GlfwWindowHandler::setVSync(const bool& vsync) {
-
+		log::warn("Not implemented yet");
 	}
 	
 	const bool GlfwWindowHandler::getVSync() const {
+		log::warn("Not implemented yet");
+
 		return false;
 	}
 
 	void GlfwWindowHandler::setForegroundFramerate(const int& foregroundFramerate) {
-
+		log::warn("Not implemented yet");
 	}
 	
 	const int GlfwWindowHandler::getForegroundFramerate() const {
+		log::warn("Not implemented yet");
+
 		return 0;
 	}
 
 	void GlfwWindowHandler::setBackgroundFramerate(const int& backgroundFramerate) {
-
+		log::warn("Not implemented yet");
 	}
 	
 	const int GlfwWindowHandler::getBackgroundFramerate() const {
+		log::warn("Not implemented yet");
+
 		return 0;
 	}
 
