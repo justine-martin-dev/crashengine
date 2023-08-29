@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CrashEngine/CrashEngine.hpp"
+#include "CrashEngine/Entity.hpp"
 #include "CrashEngine/Mesh.hpp"
 #include "CrashEngine/Scene.hpp"
 #include "CrashEngine/Shader.hpp"
@@ -9,6 +10,8 @@
 class MainScene : public crashengine::Scene {
 
 	protected:
+
+		crashengine::Entity entity;
 
 		crashengine::Mesh* mesh;
 		crashengine::Shader* shader;

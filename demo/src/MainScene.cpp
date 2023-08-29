@@ -1,6 +1,8 @@
 #include "MainScene.hpp"
 
-MainScene::MainScene(crashengine::CrashEngine* engine) : crashengine::Scene(engine) {
+MainScene::MainScene(crashengine::CrashEngine* engine) : 
+		crashengine::Scene(engine), 
+		entity() {
 	std::pair<crashengine::ShaderType, std::string> vertex{crashengine::ShaderType::VERTEX, "shader.vert"};
 	std::pair<crashengine::ShaderType, std::string> fragment{crashengine::ShaderType::FRAGMENT, "shader.frag"};
 	std::set<std::pair<crashengine::ShaderType, std::string>> shadersToCreate;
@@ -10,9 +12,10 @@ MainScene::MainScene(crashengine::CrashEngine* engine) : crashengine::Scene(engi
 	shader = this->engine->getGraphicsApiHandler()->createShader(shadersToCreate);
 	shader->registerVariable("color");
 	shader->registerVariable("myAwesomeTexture");
+	shader->registerVariable("model");
 
 	shader->bind();
-	
+
 	float v[] = {0.0f, 0.0f, 1.0f};
 	crashengine::Data<crashengine::DataType::FLOAT, 1, 3> data;
 	data.count = 1;
@@ -49,6 +52,8 @@ MainScene::MainScene(crashengine::CrashEngine* engine) : crashengine::Scene(engi
 	};
 
 	mesh = this->engine->getGraphicsApiHandler()->storeMeshIntoMemory(vertices, vertices, uv, indices);
+
+	this->entity.translate({0.2f, 0.2f, 0.0f});
 }
 
 MainScene::~MainScene() {
@@ -75,6 +80,14 @@ void MainScene::draw() {
 	this->shader->bind();
 	this->texture->bind(0);
 	this->mesh->bind();
+	this->entity.updateMatrix();
+
+	crashengine::Data<crashengine::DataType::FLOAT, 4, 4> data;
+	data.count = 1;
+	glm::mat4 m = this->entity.getModelMatrix();
+	data.data = &m;
+
+	this->shader->updateVariable("model", data);
 	this->mesh->draw();
 	this->mesh->unbind();
 	this->texture->unbind();
