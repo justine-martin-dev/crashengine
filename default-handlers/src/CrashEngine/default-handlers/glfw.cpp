@@ -1,11 +1,13 @@
 #include "CrashEngine/default-handlers/glfw.hpp"
 
+#include "CrashEngine/logger.hpp"
+#include <stdexcept>
+
 namespace crashengine {
 
-	GlfwWindowHandler::GlfwWindowHandler(const WindowConfig& config) : initialized(false), window(nullptr) {
+	GlfwWindowHandler::GlfwWindowHandler(const WindowConfig& config) : window(nullptr) {
 		if(!glfwInit()) {
-			log::error("Error while initializing glfw");
-			return;
+			throw std::runtime_error("Error while initializing glfw");
 		}
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -13,8 +15,8 @@ namespace crashengine {
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 		this->window = glfwCreateWindow(config.width, config.height,  config.title.c_str(), glfwGetPrimaryMonitor(), nullptr);
 		if(!this->window) {
-			log::error("Error while creating the glfw window");
 			glfwTerminate();
+			throw std::runtime_error("Error while creating the glfw window");
 			return;
 		}
 
@@ -22,17 +24,13 @@ namespace crashengine {
 		gladLoadGL(glfwGetProcAddress);
 
 		this->title = config.title;
-		this->initialized = true;
 	}
 
 	GlfwWindowHandler::~GlfwWindowHandler() {
-		if(initialized) {
+		if(window) {
+			glfwDestroyWindow(this->window);
 			glfwTerminate();
 		}
-	}
-
-	const bool GlfwWindowHandler::isInitialized() const {
-		return this->initialized;
 	}
 
 	void GlfwWindowHandler::hide() {
@@ -59,7 +57,7 @@ namespace crashengine {
 		glfwSetWindowShouldClose(this->window, true);
 	}
 
-	const bool GlfwWindowHandler::shouldStopGame() const {
+	const bool GlfwWindowHandler::shouldCloseWindow() const {
 		return glfwWindowShouldClose(this->window);
 	}
 	

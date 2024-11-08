@@ -19,8 +19,8 @@ namespace crashengine {
 
 			OpenGlTexture(const std::string& path, TextureSettings textureSettings);
 
-			void bind(std::size_t textureSlot) override;
-			void unbind() override;
+			void bindToSlot(std::size_t textureSlot) override;
+			void unbind(std::size_t texture_slot) override;
 	};
 
 }

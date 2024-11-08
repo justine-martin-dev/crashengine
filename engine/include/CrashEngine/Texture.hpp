@@ -1,6 +1,6 @@
 #pragma once
 
-#include <string>
+#include <cstddef>
 
 namespace crashengine {
 
@@ -30,10 +30,10 @@ namespace crashengine {
 
 		public:
 
-			Texture(TextureSettings TextureSettings);
+			Texture(TextureSettings textureSettings);
 			
-			virtual void bind(std::size_t textureSlot) = 0;
-			virtual void unbind() = 0;
+			virtual void bindToSlot(std::size_t textureSlot) = 0;
+			virtual void unbind(std::size_t texture_slot) = 0;
 
 	};
 

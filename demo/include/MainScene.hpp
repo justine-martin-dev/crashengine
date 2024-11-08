@@ -10,6 +10,10 @@
 class MainScene : public crashengine::Scene {
 
 	protected:
+		
+		crashengine::ShaderVariableId shader_var_color;
+		crashengine::ShaderVariableId shader_var_texture;
+		crashengine::ShaderVariableId shader_var_model;
 
 		crashengine::Entity entity;
 

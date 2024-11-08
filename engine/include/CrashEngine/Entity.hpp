@@ -1,13 +1,11 @@
 #pragma once
 
-#include <glm/vec3.hpp> // glm::vec3
-#include <glm/vec4.hpp> // glm::vec4
-#include <glm/mat4x4.hpp> // glm::mat4
-#include <glm/ext/matrix_transform.hpp> // glm::translate, glm::rotate, glm::scale
-#include <glm/ext/matrix_clip_space.hpp> // glm::perspective
-#include <glm/ext/scalar_constants.hpp> // glm::pi
-
-#include "CrashEngine/Mesh.hpp"
+#include <glm/vec3.hpp> 
+#include <glm/vec4.hpp> 
+#include <glm/mat4x4.hpp> 
+#include <glm/ext/matrix_transform.hpp> 
+#include <glm/ext/matrix_clip_space.hpp> 
+#include <glm/ext/scalar_constants.hpp> 
 
 namespace crashengine {
 	
@@ -17,29 +15,40 @@ namespace crashengine {
 
 			glm::vec3 position;
 			// Rotation is in radians
-			glm::vec3 rotation;
-			glm::vec3 scale;
+			glm::vec3 radian_rotation;
+			glm::vec3 proportions;
 
 			glm::mat4 modelMatrix;
 
-			bool isModelMatrixDirty;
+			bool isModelMatrixDusty;
 			
 		public:
 
 			Entity();
-			Entity(glm::vec3 position, glm::vec3 rotation, glm::vec3 scale);
+			Entity(const glm::vec3& position, const glm::vec3& radian_rotation, const glm::vec3& scale);
 
-			void translate(glm::vec3 translation);
-			void translateAndNormalize(glm::vec3 translation, float normalisation);
+			void translate(const glm::vec3& translation);
+			void translateAndNormalize(const glm::vec3& rawDirection, const float length);
 
-			void rotate(glm::vec3 rotation);
-			void rotateDegree(glm::vec3 rotationDegree);
+			void rotate(const glm::vec3& radian_rotation);
+			void rotateDegree(const glm::vec3& rotationDegree);
 
-			void setScale(glm::vec3 scale);
-			void setScale(float scale);
+			void scale(const glm::vec3& scaling);
+			void scale(const float scaling);
+			
+			glm::vec3 getPosition() const;
+			void setPosition(const glm::vec3& position);
+
+			glm::vec3 getRotation() const;
+			void setRotation(const glm::vec3& rotation);
+			void setRotationDegree(const glm::vec3& rotation_degree);
+			
+			glm::vec3 getScale() const;
+			void setScale(const glm::vec3& scale);
+			void setScale(const float scale);
 
 			void updateMatrix();
-			glm::mat4 getModelMatrix();
+			glm::mat4 getModelMatrix() const;
 	};
 
 }

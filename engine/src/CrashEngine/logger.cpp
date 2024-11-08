@@ -1,5 +1,7 @@
 #include "CrashEngine/logger.hpp"
 
+#include <iostream>
+
 namespace crashengine {
 
 	namespace log {

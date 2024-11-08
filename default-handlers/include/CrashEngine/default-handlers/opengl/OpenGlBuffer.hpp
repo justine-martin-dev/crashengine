@@ -13,6 +13,7 @@ namespace crashengine {
 
 			GLuint id;
 			GLenum target;
+			std::size_t size;
 
 		public:
 			OpenGlBuffer(GLenum target);
@@ -22,6 +23,7 @@ namespace crashengine {
 			void unbind();
 			
 			void setData(std::vector<T>& data);
+			std::size_t getSize();
 	};
 
 	template class OpenGlBuffer<GLbyte>;

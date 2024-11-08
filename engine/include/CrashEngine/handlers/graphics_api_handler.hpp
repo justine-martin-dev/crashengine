@@ -4,9 +4,8 @@
 #include "CrashEngine/Shader.hpp"
 #include "CrashEngine/Texture.hpp"
 
-#include <set>
+#include <filesystem>
 #include <string>
-#include <utility>
 #include <vector>
 
 namespace crashengine {
@@ -22,12 +21,12 @@ namespace crashengine {
 
 			virtual void clearScreen() = 0;
 
-			virtual void draw() = 0;
+			virtual void render() = 0;
 
-			virtual Shader* createShader(std::set<std::pair<ShaderType, std::string>>& sourceList) = 0;
-			virtual Mesh* storeMeshIntoMemory(std::vector<float>& vertices, std::vector<float>& verticesNormals, std::vector<float>& textureCoordinates, std::vector<unsigned int>& verticesIndex) = 0;
-			virtual Texture* storeTextureIntoMemory(const std::string& path) = 0;
-			virtual Texture* storeTextureIntoMemory(const std::string& path, TextureSettings settings) = 0;
+			virtual Shader* createShader(const std::filesystem::path& vertex_shader_path, const std::filesystem::path& fragment_shader_path) = 0;
+			virtual Mesh* createMesh(std::vector<float>& vertices, std::vector<float>& verticesNormals, std::vector<float>& textureCoordinates, std::vector<unsigned int>& verticesIndex) = 0;
+			virtual Texture* createTexture(const std::string& path) = 0;
+			virtual Texture* createTexture(const std::string& path, TextureSettings settings) = 0;
 
 	};
 }

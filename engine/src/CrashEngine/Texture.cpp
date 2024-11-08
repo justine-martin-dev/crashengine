@@ -2,7 +2,7 @@
 
 namespace crashengine {
 
-	Texture::Texture(TextureSettings TextureSettings) 
+	Texture::Texture(TextureSettings textureSettings) 
 			: textureSettings(textureSettings) {	
 	}
 

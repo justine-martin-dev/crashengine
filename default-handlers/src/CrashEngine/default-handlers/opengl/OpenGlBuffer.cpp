@@ -1,11 +1,9 @@
 #include "CrashEngine/default-handlers/opengl/OpenGlBuffer.hpp"
 
-#include <iostream>
-
 namespace crashengine {
 
 	template <typename T>
-	OpenGlBuffer<T>::OpenGlBuffer(GLenum target) : target(target) {
+	OpenGlBuffer<T>::OpenGlBuffer(GLenum target) : target(target), size(0) {
 		glGenBuffers(1, &this->id);
 	}
 
@@ -27,6 +25,12 @@ namespace crashengine {
 	template <typename T>
 	void OpenGlBuffer<T>::setData(std::vector<T>& data) {
 		glBufferData(this->target, sizeof(T)*data.size(), data.data(), GL_STATIC_DRAW);
+		this->size = data.size();
+	}
+
+	template <typename T>
+	std::size_t OpenGlBuffer<T>::getSize() {
+		return this->size;
 	}
 
 }

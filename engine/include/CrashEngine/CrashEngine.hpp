@@ -5,9 +5,6 @@
 
 #include "CrashEngine/Scene.hpp"
 
-#include <chrono>
-#include <set>
-
 namespace crashengine {
 	
 	class Scene;
@@ -32,11 +29,13 @@ namespace crashengine {
 
 		public:
 			CrashEngine(GraphicsApiHandler* graphicsApiHandler, WindowHandler* windowHandler);
-			void startGame(Scene* scene);
+			void start(Scene* scene);
 
-			GraphicsSettings& getGraphicsSettings();
-			GraphicsApiHandler* getGraphicsApiHandler();
-			WindowHandler* getWindowHandler();
+			GraphicsSettings getGraphicsSettings() const;
+			GraphicsApiHandler* getGraphicsApiHandler() const;
+			WindowHandler* getWindowHandler() const;
+
+			void setScene(Scene* scene);
 	};
 
 }

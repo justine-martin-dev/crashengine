@@ -1,6 +1,8 @@
 cmake_minimum_required (VERSION 3.23)
 
-project(CrashEngine VERSION 0.0.0 LANGUAGES CXX)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+project(CrashEngine VERSION 0.1.0 LANGUAGES CXX)
 
 add_subdirectory(vendors/catch2)
 add_subdirectory(vendors/glfw)
@@ -12,14 +14,13 @@ add_library(CrashEngine
 	engine/src/CrashEngine/Entity.cpp
 	engine/src/CrashEngine/logger.cpp
 	engine/src/CrashEngine/Scene.cpp
-	engine/src/CrashEngine/Shader.cpp
 	engine/src/CrashEngine/Texture.cpp)
 
 target_include_directories(CrashEngine 
 	PUBLIC 
 		engine/include)
 
-set_target_properties(CrashEngine PROPERTIES CXX_STANDARD 17)
+set_target_properties(CrashEngine PROPERTIES CXX_STANDARD 20)
 
 # Default handlers
 add_library(CrashEngine-default-handlers 
@@ -53,6 +54,10 @@ target_include_directories(demo
 
 target_link_libraries(demo CrashEngine CrashEngine-default-handlers)
 set_target_properties(demo PROPERTIES CXX_STANDARD 17)
+
+add_custom_command(TARGET demo PRE_BUILD
+	COMMAND ${CMAKE_COMMAND} -E copy_directory
+	${CMAKE_SOURCE_DIR}/demo/assets/ $<TARGET_FILE_DIR:demo>)
 
 # Tests
 add_executable(tests 

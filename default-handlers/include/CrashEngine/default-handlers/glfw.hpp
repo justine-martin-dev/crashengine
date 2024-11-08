@@ -1,7 +1,6 @@
 #pragma once
 
 #include "CrashEngine/handlers/window_handler.hpp"
-#include "CrashEngine/logger.hpp"
 
 #include "glad/gl.h"
 #include "GLFW/glfw3.h"
@@ -15,13 +14,9 @@ namespace crashengine {
 			GLFWwindow *window;
 			std::string title;
 
-			bool initialized;
-
 		public:
 			GlfwWindowHandler(const WindowConfig& config);
 			~GlfwWindowHandler();
-
-			const bool isInitialized() const override;
 
 			void hide() override;
 			void show() override;
@@ -31,7 +26,7 @@ namespace crashengine {
 			void swapBuffers() override;
 
 			void stopGame() override;
-			const bool shouldStopGame() const override;
+			const bool shouldCloseWindow() const override;
 
 			void setTitle(const std::string& title) override;
 			const std::string& getTitle() const override;

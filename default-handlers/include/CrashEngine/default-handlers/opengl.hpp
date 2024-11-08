@@ -1,21 +1,13 @@
 #pragma once
 
-#include "CrashEngine/logger.hpp"
 #include "CrashEngine/Mesh.hpp"
 #include "CrashEngine/Shader.hpp"
 #include "CrashEngine/Texture.hpp"
 #include "CrashEngine/handlers/graphics_api_handler.hpp"
 
-#include "CrashEngine/default-handlers/opengl/OpenGlMesh.hpp"
-#include "CrashEngine/default-handlers/opengl/OpenGlShader.hpp"
-#include "CrashEngine/default-handlers/opengl/OpenGlTexture.hpp"
-
 #include "glad/gl.h"
 
-#include <algorithm>
-#include <fstream>
-#include <iostream>
-#include <sstream>
+#include <filesystem>
 
 namespace crashengine {
 	
@@ -26,11 +18,12 @@ namespace crashengine {
 
 			void clearScreen() override;
 
-			void draw() override;
+			void render() override;
 
-			Shader* createShader(std::set<std::pair<ShaderType, std::string>>& sourceList) override;
-			Mesh* storeMeshIntoMemory(std::vector<float>& vertices, std::vector<float>& verticesNormals, std::vector<float>& textureCoordinates, std::vector<unsigned int>& verticesIndex) override;
-			Texture* storeTextureIntoMemory(const std::string& path) override;
-			Texture* storeTextureIntoMemory(const std::string& path, TextureSettings settings) override;
+			Shader* createShader(const std::filesystem::path& vertex_shader_path, const std::filesystem::path& fragment_shader_path) override;
+			GLuint createShaderStage(const std::filesystem::path& path, const GLenum stage_type);
+			Mesh* createMesh(std::vector<float>& vertices, std::vector<float>& verticesNormals, std::vector<float>& textureCoordinates, std::vector<unsigned int>& verticesIndex) override;
+			Texture* createTexture(const std::string& path) override;
+			Texture* createTexture(const std::string& path, TextureSettings settings) override;
 	};
 }

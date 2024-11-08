@@ -11,8 +11,8 @@ namespace crashengine {
 
 	template<DataType type, std::size_t dim1, std::size_t dim2>
 	struct Data {
-
-		std::pair<std::size_t, std::size_t> layout = std::pair(dim1, dim2);
+		
+		std::pair<std::size_t, std::size_t> layout = std::make_pair(dim1, dim2);
 		std::size_t count;
 		DataType dataType = type;
 		void* data;

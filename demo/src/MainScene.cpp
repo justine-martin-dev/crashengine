@@ -3,35 +3,28 @@
 MainScene::MainScene(crashengine::CrashEngine* engine) : 
 		crashengine::Scene(engine), 
 		entity() {
-	std::pair<crashengine::ShaderType, std::string> vertex{crashengine::ShaderType::VERTEX, "shader.vert"};
-	std::pair<crashengine::ShaderType, std::string> fragment{crashengine::ShaderType::FRAGMENT, "shader.frag"};
-	std::set<std::pair<crashengine::ShaderType, std::string>> shadersToCreate;
-	shadersToCreate.insert(vertex);
-	shadersToCreate.insert(fragment);
+	// Create shader
+	shader = this->engine->getGraphicsApiHandler()->createShader("assets/shader.vert", "assets/shader.frag");
 
-	shader = this->engine->getGraphicsApiHandler()->createShader(shadersToCreate);
-	shader->registerVariable("color");
-	shader->registerVariable("myAwesomeTexture");
-	shader->registerVariable("model");
-
-	shader->bind();
+	this->shader_var_color = shader->getVariableId("color");
+	this->shader_var_texture = shader->getVariableId("myAwesomeTexture");
+	this->shader_var_model = shader->getVariableId("model");
 
 	float v[] = {0.0f, 0.0f, 1.0f};
-	crashengine::Data<crashengine::DataType::FLOAT, 1, 3> data;
-	data.count = 1;
-	data.data = v;
+	crashengine::Data<crashengine::DataType::FLOAT, 1, 3> color;
+	color.count = 1;
+	color.data = v;
 
 	int value = 0;
 	crashengine::Data<crashengine::DataType::INT, 1, 1> data2;
 	data2.count = 1;
 	data2.data = &value;
 
-	shader->updateVariable("color", data);
-	shader->updateVariable("myAwesomeTexture", data2);
+	shader->bind();
+	shader->updateVariable(shader_var_color, color);
 	shader->unbind();
 
-	this->texture = engine->getGraphicsApiHandler()->storeTextureIntoMemory("nebu.png");
-
+	// Create mesh
 	std::vector<float> vertices = {
 		0.5f,  0.5f, 0.0f,  // top right
 		0.5f, -0.5f, 0.0f,  // bottom right
@@ -51,9 +44,15 @@ MainScene::MainScene(crashengine::CrashEngine* engine) :
 		1, 2, 3    // second triangle
 	};
 
-	mesh = this->engine->getGraphicsApiHandler()->storeMeshIntoMemory(vertices, vertices, uv, indices);
+	mesh = this->engine->getGraphicsApiHandler()->createMesh(vertices, vertices, uv, indices);
 
+	// Setting up entity
 	this->entity.translate({0.2f, 0.2f, 0.0f});
+	this->entity.setScale(0.5f);
+	this->entity.updateMatrix();
+
+	// Create texture
+	this->texture = engine->getGraphicsApiHandler()->createTexture("assets/nebu.png");
 }
 
 MainScene::~MainScene() {
@@ -78,18 +77,14 @@ void MainScene::update(float delta) {
 
 void MainScene::draw() {
 	this->shader->bind();
-	this->texture->bind(0);
+	this->texture->bindToSlot(0);
 	this->mesh->bind();
-	this->entity.updateMatrix();
 
+	glm::mat4 m = this->entity.getModelMatrix();
 	crashengine::Data<crashengine::DataType::FLOAT, 4, 4> data;
 	data.count = 1;
-	glm::mat4 m = this->entity.getModelMatrix();
 	data.data = &m;
+	this->shader->updateVariable(this->shader_var_model, data);
 
-	this->shader->updateVariable("model", data);
 	this->mesh->draw();
-	this->mesh->unbind();
-	this->texture->unbind();
-	this->shader->unbind();
 }

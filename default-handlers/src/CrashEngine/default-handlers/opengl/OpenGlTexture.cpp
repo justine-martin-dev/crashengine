@@ -7,28 +7,28 @@ namespace crashengine {
 
 		glGenTextures(1, &this->id);
 		
-		this->bind(0);
+		this->bindToSlot(0);
 
-		constexpr GLint openglTextureWrapping[] = {GL_REPEAT, GL_MIRRORED_REPEAT, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_BORDER};
+		GLint openglTextureWrapping[] = {GL_REPEAT, GL_MIRRORED_REPEAT, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_BORDER};
 		constexpr std::size_t openglTextureWrappingCount = 4;
 
-		constexpr GLint openglTextureFiltering[] = {GL_NEAREST, GL_LINEAR};
+		GLint openglTextureFiltering[] = {GL_NEAREST, GL_LINEAR};
 		constexpr std::size_t openglTextureFilteringCount = 2;
 
 		if(textureSettings.textureWrapping >= openglTextureWrappingCount) {
-			log::compatibilityWarning("The OpenGL doesn't know how to handle the texture wrapping with value of " + std::to_string(textureSettings.textureWrapping) + ". The value will be set back to REPEAT.");
+			log::compatibilityWarning("OpenGL doesn't know how to handle the texture wrapping with value of " + std::to_string(textureSettings.textureWrapping) + ". The value will be set back to REPEAT.");
 
 			textureSettings.textureWrapping = TextureWrapping::REPEAT;
 		}
 
 		if(textureSettings.textureFiltering >= openglTextureFilteringCount) {
-			log::compatibilityWarning("The OpenGL doesn't know how to handle the texture filtering with value of " + std::to_string(textureSettings.textureWrapping) + ". The value will be set back to LINEAR.");
+			log::compatibilityWarning("OpenGL doesn't know how to handle the texture filtering with value of " + std::to_string(textureSettings.textureWrapping) + ". The value will be set back to LINEAR.");
 
 			textureSettings.textureFiltering = Filtering::LINEAR;
 		}
 
 		if(textureSettings.mipMapFiltering >= openglTextureFilteringCount) {
-			log::compatibilityWarning("The OpenGL doesn't know how to handle the mipmap filtering with value of " + std::to_string(textureSettings.textureWrapping) + ". The value will be set back to LINEAR.");
+			log::compatibilityWarning("OpenGL doesn't know how to handle the mipmap filtering with value of " + std::to_string(textureSettings.textureWrapping) + ". The value will be set back to LINEAR.");
 
 			textureSettings.mipMapFiltering = Filtering::LINEAR;
 		}
@@ -95,13 +95,13 @@ namespace crashengine {
 		stbi_image_free(data);
 	}
 
-	void OpenGlTexture::bind(std::size_t textureSlot) {
+	void OpenGlTexture::bindToSlot(std::size_t textureSlot) {
 		glActiveTexture(GL_TEXTURE0+textureSlot);
 		glBindTexture(GL_TEXTURE_2D, this->id);
 	}
 
-	void OpenGlTexture::unbind() {
-		glActiveTexture(GL_TEXTURE0);
+	void OpenGlTexture::unbind(std::size_t texture_slot) {
+		glActiveTexture(GL_TEXTURE0+texture_slot);
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 

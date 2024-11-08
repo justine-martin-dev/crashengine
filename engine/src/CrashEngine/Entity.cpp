@@ -1,4 +1,5 @@
 #include "CrashEngine/Entity.hpp"
+#include <glm/trigonometric.hpp>
 
 namespace crashengine {
 	
@@ -7,69 +8,114 @@ namespace crashengine {
 	
 	}
 
-	Entity::Entity(glm::vec3 position, glm::vec3 rotation, glm::vec3 scale) 
+	Entity::Entity(const glm::vec3& position, const glm::vec3& radian_rotation, const glm::vec3& scale) 
 			: position(position),
-			  rotation(rotation),
-			  scale(scale),
+			  radian_rotation(radian_rotation),
+			  proportions(scale),
 			  modelMatrix(1),
-			  isModelMatrixDirty(false) {
+			  isModelMatrixDusty(true) {
 		updateMatrix();
 	}
 
 	void Entity::updateMatrix() {
-		if(this->isModelMatrixDirty) {
+		if(this->isModelMatrixDusty) {
 			this->modelMatrix = glm::mat4(1);
 			this->modelMatrix = glm::translate(this->modelMatrix, this->position);
-			this->modelMatrix = glm::rotate(this->modelMatrix, this->rotation[0], {1, 0, 0});
-			this->modelMatrix = glm::rotate(this->modelMatrix, this->rotation[1], {0, 1, 0});
-			this->modelMatrix = glm::rotate(this->modelMatrix, this->rotation[2], {0, 0, 1});
-			this->modelMatrix = glm::scale(this->modelMatrix, this->scale);
+			this->modelMatrix = glm::rotate(this->modelMatrix, this->radian_rotation[0], {1, 0, 0});
+			this->modelMatrix = glm::rotate(this->modelMatrix, this->radian_rotation[1], {0, 1, 0});
+			this->modelMatrix = glm::rotate(this->modelMatrix, this->radian_rotation[2], {0, 0, 1});
+			this->modelMatrix = glm::scale(this->modelMatrix, this->proportions);
 
-			this->isModelMatrixDirty = false;
+			this->isModelMatrixDusty = false;
 		}
 	}
 
-	void Entity::translate(glm::vec3 translation) {
+	void Entity::translate(const glm::vec3& translation) {
 		this->position += translation;
 		
-		this->isModelMatrixDirty = true;
+		this->isModelMatrixDusty = true;
 	}
 
-	void Entity::translateAndNormalize(glm::vec3 translation, float normalisation) {
+	void Entity::translateAndNormalize(const glm::vec3& rawDirection, const float length) {
 		glm::vec3 normalisedTranslation;
 
-		normalisedTranslation.x = translation.x / translation.length();
-		normalisedTranslation.y = translation.y / translation.length();
-		normalisedTranslation.z = translation.z / translation.length();
+		float rawDirectionLength = rawDirection.length();
+		normalisedTranslation.x = rawDirection.x / rawDirectionLength;
+		normalisedTranslation.y = rawDirection.y / rawDirectionLength;
+		normalisedTranslation.z = rawDirection.z / rawDirectionLength;
 
-		this->translate(normalisedTranslation * normalisation);
-	}
-
-	void Entity::rotate(glm::vec3 rotation) {
-		this->rotation += rotation;
+		this->position += normalisedTranslation * length;
 		
-		this->isModelMatrixDirty = true;
+		this->isModelMatrixDusty = true;
 	}
 
-	void Entity::rotateDegree(glm::vec3 rotationDegree) {
-		this->rotation += glm::radians(rotationDegree);
+	void Entity::rotate(const glm::vec3& radian_rotation) {
+		this->radian_rotation += radian_rotation;
 		
-		this->isModelMatrixDirty = true;
+		this->isModelMatrixDusty = true;
 	}
 
-	void Entity::setScale(glm::vec3 scale) {
-		this->scale = scale;
+	void Entity::rotateDegree(const glm::vec3& rotationDegree) {
+		this->radian_rotation += glm::radians(rotationDegree);
 		
-		this->isModelMatrixDirty = true;
+		this->isModelMatrixDusty = true;
 	}
 
-	void Entity::setScale(float scale) {
-		this->scale = {scale, scale, scale};
+	void Entity::scale(const glm::vec3& scaling) {
+		this->proportions += scaling;
+
+		this->isModelMatrixDusty = true;
+	}
+
+	void Entity::scale(const float scaling) {
+		this->proportions += glm::vec3{scaling, scaling, scaling};
+
+		this->isModelMatrixDusty = true;
+	}
+
+	glm::vec3 Entity::getPosition() const {
+		return this->position;
+	}
+
+	void Entity::setPosition(const glm::vec3& position) {
+		this->position = position;
 		
-		this->isModelMatrixDirty = true;
+		this->isModelMatrixDusty = true;
 	}
 
-	glm::mat4 Entity::getModelMatrix() {
+	glm::vec3 Entity::getRotation() const {
+		return this->radian_rotation;
+	}
+
+	void Entity::setRotation(const glm::vec3& rotation) {
+		this->radian_rotation = rotation;
+
+		this->isModelMatrixDusty = true;
+	}
+
+	void Entity::setRotationDegree(const glm::vec3& rotation_degree) {
+		this->radian_rotation = glm::radians(rotation_degree);
+
+		this->isModelMatrixDusty = true;
+	}
+	
+	glm::vec3 Entity::getScale() const {
+		return this->proportions;
+	}
+
+	void Entity::setScale(const glm::vec3& scale) {
+		this->proportions = scale;
+		
+		this->isModelMatrixDusty = true;
+	}
+
+	void Entity::setScale(const float scale) {
+		this->proportions = {scale, scale, scale};
+		
+		this->isModelMatrixDusty = true;
+	}
+
+	glm::mat4 Entity::getModelMatrix() const {
 		return this->modelMatrix;
 	}
 
