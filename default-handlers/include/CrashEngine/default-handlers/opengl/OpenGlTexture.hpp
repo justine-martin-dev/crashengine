@@ -1,11 +1,12 @@
 #pragma once
 
 #include "CrashEngine/Texture.hpp"
-#include "CrashEngine/logger.hpp"
 
 #include "glad/gl.h"
 
 #include "stb_image.h"
+
+#include <string>
 
 namespace crashengine {
 
@@ -13,14 +14,14 @@ namespace crashengine {
 		
 		protected:
 
-			GLuint id;
+			GLuint _id;
 
 		public:
 
 			OpenGlTexture(const std::string& path, TextureSettings textureSettings);
 
-			void bindToSlot(std::size_t textureSlot) override;
-			void unbind(std::size_t texture_slot) override;
+			void bind_to_slot(std::size_t textureSlot) override;
+			void unbind(std::size_t textureSlot) override;
 	};
 
 }

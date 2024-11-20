@@ -5,58 +5,58 @@
 namespace crashengine {
 
     CrashEngine::CrashEngine(GraphicsApiHandler* graphicsApiHandler, WindowHandler* windowHandler)
-        : graphicsApiHandler(graphicsApiHandler)
-        , windowHandler(windowHandler)
+        : _graphicsApiHandler(graphicsApiHandler)
+        , _windowHandler(windowHandler)
     {
     }
 
     void CrashEngine::start(Scene* scene)
     {
-        this->scene = scene;
+        this->_scene = scene;
 
-        windowHandler->show();
-        this->scene->show();
+        this->_windowHandler->show();
+        this->_scene->show();
 
         std::chrono::steady_clock::time_point lastTime = std::chrono::steady_clock::now();
-        while (!windowHandler->shouldCloseWindow()) {
-            graphicsApiHandler->clearScreen();
+        while (!this->_windowHandler->should_close_window()) {
+            this->_graphicsApiHandler->clear_screen();
 
-            windowHandler->pollEvents();
+            this->_windowHandler->poll_events();
 
             std::chrono::steady_clock::time_point currentTime = std::chrono::steady_clock::now();
-            this->scene->update(std::chrono::duration<float>(currentTime - lastTime).count());
+            this->_scene->update(std::chrono::duration<float>(currentTime - lastTime).count());
             lastTime = currentTime;
 
-            this->scene->draw();
+            this->_scene->draw();
 
-            windowHandler->swapBuffers();
+            this->_windowHandler->swap_buffers();
         }
 
-        setScene(nullptr);
+        this->scene(nullptr);
     }
 
-    GraphicsSettings CrashEngine::getGraphicsSettings() const
+    GraphicsSettings CrashEngine::graphics_settings() const
     {
-        return this->graphicsSettings;
+        return this->_graphicsSettings;
     }
 
-    GraphicsApiHandler* CrashEngine::getGraphicsApiHandler() const
+    GraphicsApiHandler* CrashEngine::graphics_api_handler() const
     {
-        return this->graphicsApiHandler;
+        return this->_graphicsApiHandler;
     }
 
-    WindowHandler* CrashEngine::getWindowHandler() const
+    WindowHandler* CrashEngine::window_handler() const
     {
-        return this->windowHandler;
+        return this->_windowHandler;
     }
 
-    void CrashEngine::setScene(Scene* scene)
+    void CrashEngine::scene(Scene* scene)
     {
-        if (this->scene) {
-            this->scene->hide();
-            delete this->scene;
+        if (this->_scene) {
+            this->_scene->hide();
+            delete this->_scene;
         }
 
-        this->scene = scene;
+        this->_scene = scene;
     }
 }

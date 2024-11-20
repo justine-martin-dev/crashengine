@@ -1,38 +1,22 @@
 #include "CrashEngine/default-handlers/opengl/OpenGlTexture.hpp"
 
+#include "CrashEngine/logger.hpp"
+
 namespace crashengine {
 
     OpenGlTexture::OpenGlTexture(const std::string& path, TextureSettings textureSettings)
         : Texture(textureSettings)
     {
 
-        glGenTextures(1, &this->id);
+        glGenTextures(1, &this->_id);
 
-        this->bindToSlot(0);
+        this->bind_to_slot(0);
 
         GLint                 openglTextureWrapping[]    = { GL_REPEAT, GL_MIRRORED_REPEAT, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_BORDER };
         constexpr std::size_t openglTextureWrappingCount = 4;
 
         GLint                 openglTextureFiltering[]    = { GL_NEAREST, GL_LINEAR };
         constexpr std::size_t openglTextureFilteringCount = 2;
-
-        if (textureSettings.textureWrapping >= openglTextureWrappingCount) {
-            log::compatibilityWarning("OpenGL doesn't know how to handle the texture wrapping with value of " + std::to_string(textureSettings.textureWrapping) + ". The value will be set back to REPEAT.");
-
-            textureSettings.textureWrapping = TextureWrapping::REPEAT;
-        }
-
-        if (textureSettings.textureFiltering >= openglTextureFilteringCount) {
-            log::compatibilityWarning("OpenGL doesn't know how to handle the texture filtering with value of " + std::to_string(textureSettings.textureWrapping) + ". The value will be set back to LINEAR.");
-
-            textureSettings.textureFiltering = Filtering::LINEAR;
-        }
-
-        if (textureSettings.mipMapFiltering >= openglTextureFilteringCount) {
-            log::compatibilityWarning("OpenGL doesn't know how to handle the mipmap filtering with value of " + std::to_string(textureSettings.textureWrapping) + ". The value will be set back to LINEAR.");
-
-            textureSettings.mipMapFiltering = Filtering::LINEAR;
-        }
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, openglTextureWrapping[textureSettings.textureWrapping]);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, openglTextureWrapping[textureSettings.textureWrapping]);
@@ -50,7 +34,7 @@ namespace crashengine {
                     break;
 
                 default:
-                    log::compatibilityWarning("Can't generate a texture filter with textureFiltering at " + std::to_string(textureSettings.textureFiltering) + " and mipmapFiltering at " + std::to_string(textureSettings.mipMapFiltering));
+                    log::compatibility_warning("Can't generate a texture filter with textureFiltering at " + std::to_string(textureSettings.textureFiltering) + " and mipmapFiltering at " + std::to_string(textureSettings.mipMapFiltering));
                 }
                 break;
 
@@ -95,15 +79,15 @@ namespace crashengine {
         stbi_image_free(data);
     }
 
-    void OpenGlTexture::bindToSlot(std::size_t textureSlot)
+    void OpenGlTexture::bind_to_slot(std::size_t textureSlot)
     {
         glActiveTexture(GL_TEXTURE0 + textureSlot);
-        glBindTexture(GL_TEXTURE_2D, this->id);
+        glBindTexture(GL_TEXTURE_2D, this->_id);
     }
 
-    void OpenGlTexture::unbind(std::size_t texture_slot)
+    void OpenGlTexture::unbind(std::size_t textureSlot)
     {
-        glActiveTexture(GL_TEXTURE0 + texture_slot);
+        glActiveTexture(GL_TEXTURE0 + textureSlot);
         glBindTexture(GL_TEXTURE_2D, 0);
     }
 

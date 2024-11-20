@@ -6,6 +6,7 @@
 
 #include "glad/gl.h"
 
+#include <filesystem>
 
 namespace crashengine {
 
@@ -13,46 +14,46 @@ namespace crashengine {
 
 		protected:
 
-			GLuint id;
-
-			void updateVariable(const ShaderVariableId variable_id, const Data<DataType::FLOAT, 1, 1>& data) override;
-			void updateVariable(const ShaderVariableId variable_id, const Data<DataType::FLOAT, 1, 2>& data) override;
-			void updateVariable(const ShaderVariableId variable_id, const Data<DataType::FLOAT, 1, 3>& data) override;
-			void updateVariable(const ShaderVariableId variable_id, const Data<DataType::FLOAT, 1, 4>& data) override;
-
-			void updateVariable(const ShaderVariableId variable_id, const Data<DataType::INT, 1, 1>& data) override;
-			void updateVariable(const ShaderVariableId variable_id, const Data<DataType::INT, 1, 2>& data) override;
-			void updateVariable(const ShaderVariableId variable_id, const Data<DataType::INT, 1, 3>& data) override;
-			void updateVariable(const ShaderVariableId variable_id, const Data<DataType::INT, 1, 4>& data) override;
-
-			void updateVariable(const ShaderVariableId variable_id, const Data<DataType::UINT, 1, 1>& data) override;
-			void updateVariable(const ShaderVariableId variable_id, const Data<DataType::UINT, 1, 2>& data) override;
-			void updateVariable(const ShaderVariableId variable_id, const Data<DataType::UINT, 1, 3>& data) override;
-			void updateVariable(const ShaderVariableId variable_id, const Data<DataType::UINT, 1, 4>& data) override;
-
-			void updateVariable(const ShaderVariableId variable_id, const Data<DataType::FLOAT, 2, 2>& data) override;
-			void updateVariable(const ShaderVariableId variable_id, const Data<DataType::FLOAT, 3, 3>& data) override;
-			void updateVariable(const ShaderVariableId variable_id, const Data<DataType::FLOAT, 4, 4>& data) override;
-			void updateVariable(const ShaderVariableId variable_id, const Data<DataType::FLOAT, 2, 3>& data) override;
-			void updateVariable(const ShaderVariableId variable_id, const Data<DataType::FLOAT, 3, 2>& data) override;
-			void updateVariable(const ShaderVariableId variable_id, const Data<DataType::FLOAT, 2, 4>& data) override;
-			void updateVariable(const ShaderVariableId variable_id, const Data<DataType::FLOAT, 4, 2>& data) override;
-			void updateVariable(const ShaderVariableId variable_id, const Data<DataType::FLOAT, 3, 4>& data) override;
-			void updateVariable(const ShaderVariableId variable_id, const Data<DataType::FLOAT, 4, 3>& data) override;
+			GLuint _id;
+			GLuint _create_shader_stage(const std::filesystem::path& path, const GLenum stageType);
 
 		public:
 
-			OpenGlShader();
+			OpenGlShader(const std::filesystem::path& vertexShaderPath, const std::filesystem::path& fragmentShaderPath);
 			~OpenGlShader();
 
-			const ShaderVariableId getVariableId(const std::string& variable_id) override;
+			const ShaderVariableId get_variable_id(const std::string& variableId) override;
 
 			void bind() override;
 			void unbind() override;
 
-			void attachShader(GLuint shaderId);
-			void linkProgram();
+			void attach_shader(GLuint shaderId);
+			void link_program();
 
+			void update_variable(const ShaderVariableId variableId, const Data<DataType::FLOAT, 1, 1>& data) override;
+			void update_variable(const ShaderVariableId variableId, const Data<DataType::FLOAT, 1, 2>& data) override;
+			void update_variable(const ShaderVariableId variableId, const Data<DataType::FLOAT, 1, 3>& data) override;
+			void update_variable(const ShaderVariableId variableId, const Data<DataType::FLOAT, 1, 4>& data) override;
+
+			void update_variable(const ShaderVariableId variableId, const Data<DataType::INT, 1, 1>& data) override;
+			void update_variable(const ShaderVariableId variableId, const Data<DataType::INT, 1, 2>& data) override;
+			void update_variable(const ShaderVariableId variableId, const Data<DataType::INT, 1, 3>& data) override;
+			void update_variable(const ShaderVariableId variableId, const Data<DataType::INT, 1, 4>& data) override;
+
+			void update_variable(const ShaderVariableId variableId, const Data<DataType::UINT, 1, 1>& data) override;
+			void update_variable(const ShaderVariableId variableId, const Data<DataType::UINT, 1, 2>& data) override;
+			void update_variable(const ShaderVariableId variableId, const Data<DataType::UINT, 1, 3>& data) override;
+			void update_variable(const ShaderVariableId variableId, const Data<DataType::UINT, 1, 4>& data) override;
+
+			void update_variable(const ShaderVariableId variableId, const Data<DataType::FLOAT, 2, 2>& data) override;
+			void update_variable(const ShaderVariableId variableId, const Data<DataType::FLOAT, 3, 3>& data) override;
+			void update_variable(const ShaderVariableId variableId, const Data<DataType::FLOAT, 4, 4>& data) override;
+			void update_variable(const ShaderVariableId variableId, const Data<DataType::FLOAT, 2, 3>& data) override;
+			void update_variable(const ShaderVariableId variableId, const Data<DataType::FLOAT, 3, 2>& data) override;
+			void update_variable(const ShaderVariableId variableId, const Data<DataType::FLOAT, 2, 4>& data) override;
+			void update_variable(const ShaderVariableId variableId, const Data<DataType::FLOAT, 4, 2>& data) override;
+			void update_variable(const ShaderVariableId variableId, const Data<DataType::FLOAT, 3, 4>& data) override;
+			void update_variable(const ShaderVariableId variableId, const Data<DataType::FLOAT, 4, 3>& data) override;
 	};
 
 }

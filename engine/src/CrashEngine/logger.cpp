@@ -21,7 +21,7 @@ namespace crashengine {
             std::cout << "[WARN] " << msg << std::endl;
         }
 
-        void compatibilityWarning(const std::string& msg)
+        void compatibility_warning(const std::string& msg)
         {
             std::cout << "[COMPATIBILITY WARNING] " << msg << std::endl;
         }

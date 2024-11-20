@@ -16,14 +16,13 @@ namespace crashengine {
 		
 		public:
 
-			void clearScreen() override;
+			void clear_screen() override;
 
 			void render() override;
 
-			Shader* createShader(const std::filesystem::path& vertex_shader_path, const std::filesystem::path& fragment_shader_path) override;
-			GLuint createShaderStage(const std::filesystem::path& path, const GLenum stage_type);
-			Mesh* createMesh(std::vector<float>& vertices, std::vector<float>& verticesNormals, std::vector<float>& textureCoordinates, std::vector<unsigned int>& verticesIndex) override;
-			Texture* createTexture(const std::string& path) override;
-			Texture* createTexture(const std::string& path, TextureSettings settings) override;
+			Shader* create_shader(const std::filesystem::path& vertexShaderPath, const std::filesystem::path& fragmentShaderPath) override;
+			Mesh* create_mesh(std::vector<float>& vertices, std::vector<float>& verticesNormals, std::vector<float>& textureCoordinates, std::vector<unsigned int>& verticesIndex) override;
+			Texture* create_texture(const std::string& path) override;
+			Texture* create_texture(const std::string& path, TextureSettings settings) override;
 	};
 }

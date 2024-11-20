@@ -26,14 +26,14 @@ namespace crashengine {
 
 		protected:
 
-			TextureSettings textureSettings;
+			TextureSettings _textureSettings;
 
 		public:
 
 			Texture(TextureSettings textureSettings);
 			
-			virtual void bindToSlot(std::size_t textureSlot) = 0;
-			virtual void unbind(std::size_t texture_slot) = 0;
+			virtual void bind_to_slot(std::size_t textureSlot) = 0;
+			virtual void unbind(std::size_t textureSlot) = 0;
 
 	};
 

@@ -9,37 +9,37 @@ namespace crashengine {
     }
 
     Entity::Entity(const glm::vec3& position, const glm::vec3& radian_rotation, const glm::vec3& scale)
-        : position(position)
-        , radian_rotation(radian_rotation)
-        , proportions(scale)
-        , modelMatrix(1)
-        , isModelMatrixDusty(true)
+        : _position(position)
+        , _radian_rotation(radian_rotation)
+        , _proportions(scale)
+        , _modelMatrix(1)
+        , _isModelMatrixDusty(true)
     {
-        updateMatrix();
+        this->update_matrix();
     }
 
-    void Entity::updateMatrix()
+    void Entity::update_matrix()
     {
-        if (this->isModelMatrixDusty) {
-            this->modelMatrix = glm::mat4(1);
-            this->modelMatrix = glm::translate(this->modelMatrix, this->position);
-            this->modelMatrix = glm::rotate(this->modelMatrix, this->radian_rotation[0], { 1, 0, 0 });
-            this->modelMatrix = glm::rotate(this->modelMatrix, this->radian_rotation[1], { 0, 1, 0 });
-            this->modelMatrix = glm::rotate(this->modelMatrix, this->radian_rotation[2], { 0, 0, 1 });
-            this->modelMatrix = glm::scale(this->modelMatrix, this->proportions);
+        if (this->_isModelMatrixDusty) {
+            this->_modelMatrix = glm::mat4(1);
+            this->_modelMatrix = glm::translate(this->_modelMatrix, this->_position);
+            this->_modelMatrix = glm::rotate(this->_modelMatrix, this->_radian_rotation[0], { 1, 0, 0 });
+            this->_modelMatrix = glm::rotate(this->_modelMatrix, this->_radian_rotation[1], { 0, 1, 0 });
+            this->_modelMatrix = glm::rotate(this->_modelMatrix, this->_radian_rotation[2], { 0, 0, 1 });
+            this->_modelMatrix = glm::scale(this->_modelMatrix, this->_proportions);
 
-            this->isModelMatrixDusty = false;
+            this->_isModelMatrixDusty = false;
         }
     }
 
     void Entity::translate(const glm::vec3& translation)
     {
-        this->position += translation;
+        this->_position += translation;
 
-        this->isModelMatrixDusty = true;
+        this->_isModelMatrixDusty = true;
     }
 
-    void Entity::translateAndNormalize(const glm::vec3& rawDirection, const float length)
+    void Entity::translate_and_normalize(const glm::vec3& rawDirection, const float length)
     {
         glm::vec3 normalisedTranslation;
 
@@ -48,92 +48,92 @@ namespace crashengine {
         normalisedTranslation.y  = rawDirection.y / rawDirectionLength;
         normalisedTranslation.z  = rawDirection.z / rawDirectionLength;
 
-        this->position += normalisedTranslation * length;
+        this->_position += normalisedTranslation * length;
 
-        this->isModelMatrixDusty = true;
+        this->_isModelMatrixDusty = true;
     }
 
     void Entity::rotate(const glm::vec3& radian_rotation)
     {
-        this->radian_rotation += radian_rotation;
+        this->_radian_rotation += radian_rotation;
 
-        this->isModelMatrixDusty = true;
+        this->_isModelMatrixDusty = true;
     }
 
-    void Entity::rotateDegree(const glm::vec3& rotationDegree)
+    void Entity::rotate_degree(const glm::vec3& rotationDegree)
     {
-        this->radian_rotation += glm::radians(rotationDegree);
+        this->_radian_rotation += glm::radians(rotationDegree);
 
-        this->isModelMatrixDusty = true;
+        this->_isModelMatrixDusty = true;
     }
 
     void Entity::scale(const glm::vec3& scaling)
     {
-        this->proportions += scaling;
+        this->_proportions += scaling;
 
-        this->isModelMatrixDusty = true;
+        this->_isModelMatrixDusty = true;
     }
 
     void Entity::scale(const float scaling)
     {
-        this->proportions += glm::vec3 { scaling, scaling, scaling };
+        this->_proportions += glm::vec3 { scaling, scaling, scaling };
 
-        this->isModelMatrixDusty = true;
+        this->_isModelMatrixDusty = true;
     }
 
-    glm::vec3 Entity::getPosition() const
+    glm::vec3 Entity::position() const
     {
-        return this->position;
+        return this->_position;
     }
 
-    void Entity::setPosition(const glm::vec3& position)
+    void Entity::position(const glm::vec3& position)
     {
-        this->position = position;
+        this->_position = position;
 
-        this->isModelMatrixDusty = true;
+        this->_isModelMatrixDusty = true;
     }
 
-    glm::vec3 Entity::getRotation() const
+    glm::vec3 Entity::rotation() const
     {
-        return this->radian_rotation;
+        return this->_radian_rotation;
     }
 
-    void Entity::setRotation(const glm::vec3& rotation)
+    void Entity::rotation(const glm::vec3& rotation)
     {
-        this->radian_rotation = rotation;
+        this->_radian_rotation = rotation;
 
-        this->isModelMatrixDusty = true;
+        this->_isModelMatrixDusty = true;
     }
 
-    void Entity::setRotationDegree(const glm::vec3& rotation_degree)
+    void Entity::rotation_degree(const glm::vec3& rotation_degree)
     {
-        this->radian_rotation = glm::radians(rotation_degree);
+        this->_radian_rotation = glm::radians(rotation_degree);
 
-        this->isModelMatrixDusty = true;
+        this->_isModelMatrixDusty = true;
     }
 
-    glm::vec3 Entity::getScale() const
+    glm::vec3 Entity::proportions() const
     {
-        return this->proportions;
+        return this->_proportions;
     }
 
-    void Entity::setScale(const glm::vec3& scale)
+    void Entity::proportions(const glm::vec3& scale)
     {
-        this->proportions = scale;
+        this->_proportions = scale;
 
-        this->isModelMatrixDusty = true;
+        this->_isModelMatrixDusty = true;
     }
 
-    void Entity::setScale(const float scale)
+    void Entity::proportions(const float scale)
     {
-        this->proportions = { scale, scale, scale };
+        this->_proportions = { scale, scale, scale };
 
-        this->isModelMatrixDusty = true;
+        this->_isModelMatrixDusty = true;
     }
 
-    glm::mat4 Entity::getModelMatrix() const
+    glm::mat4 Entity::model_matrix() const
     {
-        return this->modelMatrix;
+        return this->_modelMatrix;
     }
 
 }

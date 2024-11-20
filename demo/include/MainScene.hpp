@@ -10,15 +10,15 @@
 class MainScene : public crashengine::Scene {
 
     protected:
-        crashengine::ShaderVariableId shader_var_color;
-        crashengine::ShaderVariableId shader_var_texture;
-        crashengine::ShaderVariableId shader_var_model;
+        crashengine::ShaderVariableId _shader_var_color;
+        crashengine::ShaderVariableId _shader_var_texture;
+        crashengine::ShaderVariableId _shader_var_model;
 
-        crashengine::Entity entity;
+        crashengine::Entity _entity;
 
-        crashengine::Mesh*    mesh;
-        crashengine::Shader*  shader;
-        crashengine::Texture* texture;
+        crashengine::Mesh*    _mesh;
+        crashengine::Shader*  _shader;
+        crashengine::Texture* _texture;
 
     public:
         MainScene(crashengine::CrashEngine* engine);

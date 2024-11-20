@@ -2,14 +2,14 @@
 
 MainScene::MainScene(crashengine::CrashEngine* engine)
     : crashengine::Scene(engine)
-    , entity()
+    , _entity()
 {
     // Create shader
-    shader = this->engine->getGraphicsApiHandler()->createShader("assets/shader.vert", "assets/shader.frag");
+    this->_shader = this->engine->graphics_api_handler()->create_shader("assets/shader.vert", "assets/shader.frag");
 
-    this->shader_var_color   = shader->getVariableId("color");
-    this->shader_var_texture = shader->getVariableId("myAwesomeTexture");
-    this->shader_var_model   = shader->getVariableId("model");
+    this->_shader_var_color   = this->_shader->get_variable_id("color");
+    this->_shader_var_texture = this->_shader->get_variable_id("myAwesomeTexture");
+    this->_shader_var_model   = this->_shader->get_variable_id("model");
 
     float                                                 v[] = { 0.0f, 0.0f, 1.0f };
     crashengine::Data<crashengine::DataType::FLOAT, 1, 3> color;
@@ -21,9 +21,9 @@ MainScene::MainScene(crashengine::CrashEngine* engine)
     data2.count = 1;
     data2.data  = &value;
 
-    shader->bind();
-    shader->updateVariable(shader_var_color, color);
-    shader->unbind();
+    this->_shader->bind();
+    this->_shader->update_variable(this->_shader_var_color, color);
+    this->_shader->unbind();
 
     // Create mesh
     std::vector<float> vertices = {
@@ -46,21 +46,21 @@ MainScene::MainScene(crashengine::CrashEngine* engine)
         1, 2, 3  // second triangle
     };
 
-    mesh = this->engine->getGraphicsApiHandler()->createMesh(vertices, vertices, uv, indices);
+    this->_mesh = this->engine->graphics_api_handler()->create_mesh(vertices, vertices, uv, indices);
 
     // Setting up entity
-    this->entity.translate({ 0.2f, 0.2f, 0.0f });
-    this->entity.setScale(0.5f);
-    this->entity.updateMatrix();
+    this->_entity.translate({ 0.2f, 0.2f, 0.0f });
+    this->_entity.proportions(0.5f);
+    this->_entity.update_matrix();
 
     // Create texture
-    this->texture = engine->getGraphicsApiHandler()->createTexture("assets/nebu.png");
+    this->_texture = engine->graphics_api_handler()->create_texture("assets/nebu.png");
 }
 
 MainScene::~MainScene()
 {
-    delete shader;
-    delete mesh;
+    delete this->_shader;
+    delete this->_mesh;
 }
 
 void MainScene::show()
@@ -81,15 +81,15 @@ void MainScene::update(float delta)
 
 void MainScene::draw()
 {
-    this->shader->bind();
-    this->texture->bindToSlot(0);
-    this->mesh->bind();
+    this->_shader->bind();
+    this->_texture->bind_to_slot(0);
+    this->_mesh->bind();
 
-    glm::mat4                                             m = this->entity.getModelMatrix();
+    glm::mat4                                             m = this->_entity.model_matrix();
     crashengine::Data<crashengine::DataType::FLOAT, 4, 4> data;
     data.count = 1;
     data.data  = &m;
-    this->shader->updateVariable(this->shader_var_model, data);
+    this->_shader->update_variable(this->_shader_var_model, data);
 
-    this->mesh->draw();
+    this->_mesh->draw();
 }

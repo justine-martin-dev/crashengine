@@ -13,42 +13,42 @@ namespace crashengine {
 
 		private:
 
-			glm::vec3 position;
+			glm::vec3 _position;
 			// Rotation is in radians
-			glm::vec3 radian_rotation;
-			glm::vec3 proportions;
+			glm::vec3 _radian_rotation;
+			glm::vec3 _proportions;
 
-			glm::mat4 modelMatrix;
+			glm::mat4 _modelMatrix;
 
-			bool isModelMatrixDusty;
+			bool _isModelMatrixDusty;
 			
 		public:
 
 			Entity();
-			Entity(const glm::vec3& position, const glm::vec3& radian_rotation, const glm::vec3& scale);
+			Entity(const glm::vec3& position, const glm::vec3& radianRotation, const glm::vec3& scale);
 
 			void translate(const glm::vec3& translation);
-			void translateAndNormalize(const glm::vec3& rawDirection, const float length);
+			void translate_and_normalize(const glm::vec3& rawDirection, const float length);
 
-			void rotate(const glm::vec3& radian_rotation);
-			void rotateDegree(const glm::vec3& rotationDegree);
+			void rotate(const glm::vec3& radianRotation);
+			void rotate_degree(const glm::vec3& rotationDegree);
 
 			void scale(const glm::vec3& scaling);
 			void scale(const float scaling);
 			
-			glm::vec3 getPosition() const;
-			void setPosition(const glm::vec3& position);
+			glm::vec3 position() const;
+			void position(const glm::vec3& position);
 
-			glm::vec3 getRotation() const;
-			void setRotation(const glm::vec3& rotation);
-			void setRotationDegree(const glm::vec3& rotation_degree);
+			glm::vec3 rotation() const;
+			void rotation(const glm::vec3& rotation);
+			void rotation_degree(const glm::vec3& rotationDegree);
 			
-			glm::vec3 getScale() const;
-			void setScale(const glm::vec3& scale);
-			void setScale(const float scale);
+			glm::vec3 proportions() const;
+			void proportions(const glm::vec3& scale);
+			void proportions(const float scale);
 
-			void updateMatrix();
-			glm::mat4 getModelMatrix() const;
+			void update_matrix();
+			glm::mat4 model_matrix() const;
 	};
 
 }

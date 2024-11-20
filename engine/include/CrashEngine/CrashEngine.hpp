@@ -20,22 +20,22 @@ namespace crashengine {
 	class CrashEngine {
 
 		private:
-			Scene* scene;
+			Scene* _scene;
 		
-			GraphicsApiHandler* graphicsApiHandler;
-			WindowHandler* windowHandler;
+			GraphicsApiHandler* _graphicsApiHandler;
+			WindowHandler* _windowHandler;
 
-			GraphicsSettings graphicsSettings;
+			GraphicsSettings _graphicsSettings;
 
 		public:
 			CrashEngine(GraphicsApiHandler* graphicsApiHandler, WindowHandler* windowHandler);
 			void start(Scene* scene);
 
-			GraphicsSettings getGraphicsSettings() const;
-			GraphicsApiHandler* getGraphicsApiHandler() const;
-			WindowHandler* getWindowHandler() const;
+			GraphicsSettings graphics_settings() const;
+			GraphicsApiHandler* graphics_api_handler() const;
+			WindowHandler* window_handler() const;
 
-			void setScene(Scene* scene);
+			void scene(Scene* scene);
 	};
 
 }

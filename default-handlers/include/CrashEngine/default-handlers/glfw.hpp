@@ -11,8 +11,8 @@ namespace crashengine {
 
 	class GlfwWindowHandler : public WindowHandler {
 		private:
-			GLFWwindow *window;
-			std::string title;
+			GLFWwindow *_window;
+			std::string _title;
 
 		public:
 			GlfwWindowHandler(const WindowConfig& config);
@@ -21,32 +21,32 @@ namespace crashengine {
 			void hide() override;
 			void show() override;
 			
-			void pollEvents() override;
-			void waitEvents() override;
-			void swapBuffers() override;
+			void poll_events() override;
+			void wait_events() override;
+			void swap_buffers() override;
 
-			void stopGame() override;
-			const bool shouldCloseWindow() const override;
+			void stop_game() override;
+			const bool should_close_window() const override;
 
-			void setTitle(const std::string& title) override;
-			const std::string& getTitle() const override;
+			void title(const std::string& title) override;
+			const std::string& title() const override;
 
-			void setHeight(const int& height) override;
-			const int getHeight() override;
+			void height(const int& height) override;
+			const int height() override;
 
-			void setWidth(const int& width) override;
-			const int getWidth() const override;
+			void width(const int& width) override;
+			const int width() const override;
 
-			void setFullscreen(const bool& fullscreen) override;
-			const bool isFullscreen() const override;
+			void is_fullscreen(const bool& fullscreen) override;
+			const bool is_fullscreen() const override;
 
-			void setVSync(const bool& vsync) override;
-			const bool getVSync() const override;
+			void is_vsync(const bool& vsync) override;
+			const bool is_vsync() const override;
 
-			void setForegroundFramerate(const int& foregroundFramerate) override;
-			const int getForegroundFramerate() const override;
+			void foreground_framerate(const int& foregroundFramerate) override;
+			const int foreground_framerate() const override;
 
-			void setBackgroundFramerate(const int& backgroundFramerate) override;
-			const int getBackgroundFramerate() const override;
+			void background_framerate(const int& backgroundFramerate) override;
+			const int background_framerate() const override;
 	};
 }

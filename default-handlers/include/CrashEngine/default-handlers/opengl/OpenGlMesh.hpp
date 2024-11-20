@@ -13,11 +13,11 @@ namespace crashengine {
 	class OpenGlMesh : public Mesh {
 		protected:
 
-			GLuint id;
-			OpenGlBuffer<GLuint> ibo;
-			OpenGlBuffer<GLfloat> positions;
-			OpenGlBuffer<GLfloat> normals;
-			OpenGlBuffer<GLfloat> textureCoordinates;
+			GLuint _id;
+			OpenGlBuffer<GLuint> _ibo;
+			OpenGlBuffer<GLfloat> _positions;
+			OpenGlBuffer<GLfloat> _normals;
+			OpenGlBuffer<GLfloat> _textureCoordinates;
 
 		public:
 			OpenGlMesh(std::vector<float>& vertices, std::vector<float>& verticesNormals, std::vector<float>& textureCoordinates, std::vector<unsigned int>& verticesIndex);

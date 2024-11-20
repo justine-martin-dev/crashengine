@@ -19,14 +19,14 @@ namespace crashengine {
 		
 		public:
 
-			virtual void clearScreen() = 0;
+			virtual void clear_screen() = 0;
 
 			virtual void render() = 0;
 
-			virtual Shader* createShader(const std::filesystem::path& vertex_shader_path, const std::filesystem::path& fragment_shader_path) = 0;
-			virtual Mesh* createMesh(std::vector<float>& vertices, std::vector<float>& verticesNormals, std::vector<float>& textureCoordinates, std::vector<unsigned int>& verticesIndex) = 0;
-			virtual Texture* createTexture(const std::string& path) = 0;
-			virtual Texture* createTexture(const std::string& path, TextureSettings settings) = 0;
+			virtual Shader* create_shader(const std::filesystem::path& vertexShaderPath, const std::filesystem::path& fragmentShaderPath) = 0;
+			virtual Mesh* create_mesh(std::vector<float>& vertices, std::vector<float>& verticesNormals, std::vector<float>& textureCoordinates, std::vector<unsigned int>& verticesIndex) = 0;
+			virtual Texture* create_texture(const std::string& path) = 0;
+			virtual Texture* create_texture(const std::string& path, TextureSettings settings) = 0;
 
 	};
 }

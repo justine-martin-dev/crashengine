@@ -6,7 +6,7 @@
 namespace crashengine {
 
     GlfwWindowHandler::GlfwWindowHandler(const WindowConfig& config)
-        : window(nullptr)
+        : _window(nullptr)
     {
         if (!glfwInit()) {
             throw std::runtime_error("Error while initializing glfw");
@@ -15,146 +15,146 @@ namespace crashengine {
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-        this->window = glfwCreateWindow(config.width, config.height, config.title.c_str(), glfwGetPrimaryMonitor(), nullptr);
-        if (!this->window) {
+        this->_window = glfwCreateWindow(config.width, config.height, config.title.c_str(), glfwGetPrimaryMonitor(), nullptr);
+        if (!this->_window) {
             glfwTerminate();
             throw std::runtime_error("Error while creating the glfw window");
             return;
         }
 
-        glfwMakeContextCurrent(this->window);
+        glfwMakeContextCurrent(this->_window);
         gladLoadGL(glfwGetProcAddress);
 
-        this->title = config.title;
+        this->_title = config.title;
     }
 
     GlfwWindowHandler::~GlfwWindowHandler()
     {
-        if (window) {
-            glfwDestroyWindow(this->window);
+        if (this->_window) {
+            glfwDestroyWindow(this->_window);
             glfwTerminate();
         }
     }
 
     void GlfwWindowHandler::hide()
     {
-        glfwHideWindow(this->window);
+        glfwHideWindow(this->_window);
     }
 
     void GlfwWindowHandler::show()
     {
-        glfwShowWindow(this->window);
+        glfwShowWindow(this->_window);
     }
 
-    void GlfwWindowHandler::pollEvents()
+    void GlfwWindowHandler::poll_events()
     {
         glfwPollEvents();
     }
 
-    void GlfwWindowHandler::waitEvents()
+    void GlfwWindowHandler::wait_events()
     {
         glfwWaitEvents();
     }
 
-    void GlfwWindowHandler::swapBuffers()
+    void GlfwWindowHandler::swap_buffers()
     {
-        glfwSwapBuffers(this->window);
+        glfwSwapBuffers(this->_window);
     }
 
-    void GlfwWindowHandler::stopGame()
+    void GlfwWindowHandler::stop_game()
     {
-        glfwSetWindowShouldClose(this->window, true);
+        glfwSetWindowShouldClose(this->_window, true);
     }
 
-    const bool GlfwWindowHandler::shouldCloseWindow() const
+    const bool GlfwWindowHandler::should_close_window() const
     {
-        return glfwWindowShouldClose(this->window);
+        return glfwWindowShouldClose(this->_window);
     }
 
-    void GlfwWindowHandler::setTitle(const std::string& title)
+    void GlfwWindowHandler::title(const std::string& title)
     {
-        glfwSetWindowTitle(this->window, title.c_str());
+        glfwSetWindowTitle(this->_window, title.c_str());
     }
 
-    const std::string& GlfwWindowHandler::getTitle() const
+    const std::string& GlfwWindowHandler::title() const
     {
-        return this->title;
+        return this->_title;
     }
 
-    void GlfwWindowHandler::setHeight(const int& height)
+    void GlfwWindowHandler::height(const int& height)
     {
         int w, h;
-        glfwGetWindowSize(this->window, &w, &h);
+        glfwGetWindowSize(this->_window, &w, &h);
 
-        glfwSetWindowSize(this->window, w, height);
+        glfwSetWindowSize(this->_window, w, height);
     }
 
-    const int GlfwWindowHandler::getHeight()
+    const int GlfwWindowHandler::height()
     {
         int w, h;
-        glfwGetWindowSize(this->window, &w, &h);
+        glfwGetWindowSize(this->_window, &w, &h);
 
         return h;
     }
 
-    void GlfwWindowHandler::setWidth(const int& width)
+    void GlfwWindowHandler::width(const int& width)
     {
         int w, h;
-        glfwGetWindowSize(this->window, &w, &h);
+        glfwGetWindowSize(this->_window, &w, &h);
 
-        glfwSetWindowSize(this->window, width, h);
+        glfwSetWindowSize(this->_window, width, h);
     }
 
-    const int GlfwWindowHandler::getWidth() const
+    const int GlfwWindowHandler::width() const
     {
         int w, h;
-        glfwGetWindowSize(this->window, &w, &h);
+        glfwGetWindowSize(this->_window, &w, &h);
 
         return w;
     }
 
-    void GlfwWindowHandler::setFullscreen(const bool& fullscreen)
+    void GlfwWindowHandler::is_fullscreen(const bool& fullscreen)
     {
         log::warn("Not implemented yet");
     }
 
-    const bool GlfwWindowHandler::isFullscreen() const
-    {
-        log::warn("Not implemented yet");
-
-        return false;
-    }
-
-    void GlfwWindowHandler::setVSync(const bool& vsync)
-    {
-        log::warn("Not implemented yet");
-    }
-
-    const bool GlfwWindowHandler::getVSync() const
+    const bool GlfwWindowHandler::is_fullscreen() const
     {
         log::warn("Not implemented yet");
 
         return false;
     }
 
-    void GlfwWindowHandler::setForegroundFramerate(const int& foregroundFramerate)
+    void GlfwWindowHandler::is_vsync(const bool& vsync)
     {
         log::warn("Not implemented yet");
     }
 
-    const int GlfwWindowHandler::getForegroundFramerate() const
+    const bool GlfwWindowHandler::is_vsync() const
+    {
+        log::warn("Not implemented yet");
+
+        return false;
+    }
+
+    void GlfwWindowHandler::foreground_framerate(const int& foregroundFramerate)
+    {
+        log::warn("Not implemented yet");
+    }
+
+    const int GlfwWindowHandler::foreground_framerate() const
     {
         log::warn("Not implemented yet");
 
         return 0;
     }
 
-    void GlfwWindowHandler::setBackgroundFramerate(const int& backgroundFramerate)
+    void GlfwWindowHandler::background_framerate(const int& backgroundFramerate)
     {
         log::warn("Not implemented yet");
     }
 
-    const int GlfwWindowHandler::getBackgroundFramerate() const
+    const int GlfwWindowHandler::background_framerate() const
     {
         log::warn("Not implemented yet");
 
