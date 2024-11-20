@@ -9,29 +9,26 @@
 
 class MainScene : public crashengine::Scene {
 
-	protected:
-		
-		crashengine::ShaderVariableId shader_var_color;
-		crashengine::ShaderVariableId shader_var_texture;
-		crashengine::ShaderVariableId shader_var_model;
+    protected:
+        crashengine::ShaderVariableId shader_var_color;
+        crashengine::ShaderVariableId shader_var_texture;
+        crashengine::ShaderVariableId shader_var_model;
 
-		crashengine::Entity entity;
+        crashengine::Entity entity;
 
-		crashengine::Mesh* mesh;
-		crashengine::Shader* shader;
-		crashengine::Texture* texture;
+        crashengine::Mesh*    mesh;
+        crashengine::Shader*  shader;
+        crashengine::Texture* texture;
 
-	public:
+    public:
+        MainScene(crashengine::CrashEngine* engine);
+        ~MainScene();
 
-		MainScene(crashengine::CrashEngine* engine);
-		~MainScene();
+        void show() override;
+        void hide() override;
 
-		void show() override;
-		void hide() override;
+        void resized(int width, int height) override;
 
-		void resized(int width, int height) override;
-
-		void update(float delta) override;
-		void draw() override;
-
+        void update(float delta) override;
+        void draw() override;
 };

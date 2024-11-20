@@ -2,7 +2,8 @@
 
 namespace crashengine {
 
-	Scene::Scene(CrashEngine* engine) : engine(engine) {
-
-	}
+    Scene::Scene(CrashEngine* engine)
+        : engine(engine)
+    {
+    }
 }
