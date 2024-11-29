@@ -21,6 +21,7 @@ target_include_directories(CrashEngine
 		engine/include)
 
 set_target_properties(CrashEngine PROPERTIES CXX_STANDARD 20)
+target_link_libraries(CrashEngine glm)
 
 # Default handlers
 add_library(CrashEngine-default-handlers 
