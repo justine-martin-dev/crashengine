@@ -2,6 +2,7 @@
 
 MainScene::MainScene(crashengine::CrashEngine* engine)
     : crashengine::Scene(engine)
+    , _camera({ 0.0f, 0.0f, -2.0f }, { 0.0f, 3.14f, 0.0f }, 45.0f, 2560.0f / 1440.0f, 0.01f, 100.0f)
     , _entity()
 {
     // Create shader
@@ -9,14 +10,16 @@ MainScene::MainScene(crashengine::CrashEngine* engine)
 
     this->_shader_var_color   = this->_shader->get_variable_id("color");
     this->_shader_var_texture = this->_shader->get_variable_id("myAwesomeTexture");
-    this->_shader_var_model   = this->_shader->get_variable_id("model");
+    this->_shader_var_model   = this->_shader->get_variable_id("mvp");
 
-    float                                                 v[] = { 0.0f, 0.0f, 1.0f };
+    float v[] = { 0.0f, 0.0f, 1.0f };
+
     crashengine::Data<crashengine::DataType::FLOAT, 1, 3> color;
     color.count = 1;
     color.data  = v;
 
-    int                                                 value = 0;
+    int value = 0;
+
     crashengine::Data<crashengine::DataType::INT, 1, 1> data2;
     data2.count = 1;
     data2.data  = &value;
@@ -27,10 +30,10 @@ MainScene::MainScene(crashengine::CrashEngine* engine)
 
     // Create mesh
     std::vector<float> vertices = {
-        0.5f, 0.5f, 0.0f,   // top right
-        0.5f, -0.5f, 0.0f,  // bottom right
-        -0.5f, -0.5f, 0.0f, // bottom left
-        -0.5f, 0.5f, 0.0f   // top left
+        0.75f, 0.5f, -0.5f,   // top right
+        0.75f, -0.5f, -0.5f,  // bottom right
+        -0.75f, -0.5f, 0.5f, // bottom left
+        -0.75f, 0.5f, 0.5f   // top left
     };
 
     std::vector<float> uv = {
@@ -49,8 +52,8 @@ MainScene::MainScene(crashengine::CrashEngine* engine)
     this->_mesh = this->engine->graphics_api_handler()->create_mesh(vertices, vertices, uv, indices);
 
     // Setting up entity
-    this->_entity.translate({ 0.2f, 0.2f, 0.0f });
-    this->_entity.proportions(0.5f);
+    /*this->_entity.translate({ 0.2f, 0.2f, 0.0f });*/
+    /*this->_entity.proportions(0.5f);*/
     this->_entity.update_matrix();
 
     // Create texture
@@ -77,7 +80,7 @@ void MainScene::resized(int width, int height)
 
 void MainScene::update(float delta)
 {
-}
+}   
 
 void MainScene::draw()
 {
@@ -85,10 +88,11 @@ void MainScene::draw()
     this->_texture->bind_to_slot(0);
     this->_mesh->bind();
 
-    glm::mat4                                             m = this->_entity.model_matrix();
+    glm::mat4 mvp = this->_camera.projection_matrix() * this->_camera.view_matrix() * this->_entity.model_matrix();
+
     crashengine::Data<crashengine::DataType::FLOAT, 4, 4> data;
     data.count = 1;
-    data.data  = &m;
+    data.data  = &mvp;
     this->_shader->update_variable(this->_shader_var_model, data);
 
     this->_mesh->draw();

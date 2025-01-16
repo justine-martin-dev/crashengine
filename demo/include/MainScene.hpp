@@ -1,5 +1,6 @@
 #pragma once
 
+#include "CrashEngine/Camera.hpp"
 #include "CrashEngine/CrashEngine.hpp"
 #include "CrashEngine/Entity.hpp"
 #include "CrashEngine/Mesh.hpp"
@@ -19,6 +20,8 @@ class MainScene : public crashengine::Scene {
         crashengine::Mesh*    _mesh;
         crashengine::Shader*  _shader;
         crashengine::Texture* _texture;
+
+        crashengine::PerspectiveCamera _camera;
 
     public:
         MainScene(crashengine::CrashEngine* engine);
